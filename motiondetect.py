@@ -18,10 +18,11 @@ while True:
         continue #because now we need to get delta frame so skip the below part in 1st loop
 
     delta_frame=cv2.absdiff(first_frame,gray)
-    thresh_frame=cv2.threshold(delta_frame,30,255,cv2.THRESH_BINARY)
+    thresh_frame=cv2.threshold(delta_frame,30,255,cv2.THRESH_BINARY)[1]
 
     cv2.imshow("Gray Frame",gray)
     cv2.imshow("Delta Frame",delta_frame)
+    cv2.imshow("Threshold",thresh_frame)
     user_key=cv2.waitKey(2)
     #To have a systematic stopping mechanism. assign waitkey to user_key then do following
     if user_key==ord('q'):
