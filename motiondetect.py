@@ -19,10 +19,22 @@ while True:
 
     delta_frame=cv2.absdiff(first_frame,gray)
     thresh_frame=cv2.threshold(delta_frame,30,255,cv2.THRESH_BINARY)[1]
+    #to remove little black holes from white areas, we smoothen them.
+    thresh_frame=cv2.dilate(thresh_frame,None,iterations=2)
+    #contour detection of white bodies in threshold frame.
+    (cnts,_)=cv2.findContours(thresh_frame.copy(),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+    #to keep contours enclosing areas bigger than a criteria
+    for contours in cnts:
+        if cv2.contourArea(contours) < 1000:
+            continue
+        (x,y,w,h)=cv2.boundingRect(contours)
+        cv2.rectangle(frame,(x,y),(x+w,y+h),(0,0,255),3)
 
     cv2.imshow("Gray Frame",gray)
     cv2.imshow("Delta Frame",delta_frame)
     cv2.imshow("Threshold",thresh_frame)
+    cv2.imshow("ColorFrame",frame)
+
     user_key=cv2.waitKey(2)
     #To have a systematic stopping mechanism. assign waitkey to user_key then do following
     if user_key==ord('q'):
