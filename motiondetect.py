@@ -1,9 +1,12 @@
 import cv2
 from datetime import datetime
+import pandas
+
 first_frame=None
 status_list=[None,None]#python would give out of range error because it tries to access from
 #list when its empty in line 40 so do this to avoid error.
 times=[]
+df=pandas.DataFrame(columns=["Start","End"])#No need to add data right now.
 
 video=cv2.VideoCapture(0)#if you have more than one camera to your computer one of those camera
 #will have index 0 second camera would be 1 and so on
@@ -58,5 +61,15 @@ while True:
 
 print(status_list)
 print(times)
+
+j=0
+for i in range(0,len(times),2):
+    #dfs=pandas.DataFrame({"Start":times[i],"End":times[i+1]},index=[0])
+    #df=df.concat([dfs],ignore_index=True)
+    dfs=[times[i],times[i+1]]
+    df.loc[j]=dfs
+    j=j+1
+
+df.to_csv("Times_table.csv")
 video.release()#now i release my camera so that i could access my object.
 cv2.destroyAllWindows()
