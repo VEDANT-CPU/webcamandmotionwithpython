@@ -39,7 +39,7 @@ while True:
         cv2.rectangle(frame,(x,y),(x+w,y+h),(0,0,255),3)
 
     status_list.append(status)
-    status_list=status_list[-2:]
+    status_list=status_list[-2:] #Because we need only the last 2 elements so remove the rest.
     #we put if below as we want to check transition after latest status appended.
     if status_list[-1]==1 and status_list[-2]==0:
         times.append(datetime.now())
