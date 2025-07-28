@@ -3,6 +3,10 @@ from motiondetect import df
 from bokeh.plotting import figure, output_file, show
 from bokeh.models import HoverTool, ColumnDataSource
 
+#To properly show data in hover we add columns which store Start and End as strings
+df["Start_string"]=df["Start"].dt.strftime("%Y-%m-%d %H:%M:%S")
+df["End_string"]=df["End"].dt.strftime("%Y-%m-%d %H:%M:%S")
+
 cds=ColumnDataSource(df) #Creating a ColumnDataSource object to pass data to plot.
 
 #When loop in line 68 in motiondetect ends df is created and then plotting.py starts.
@@ -23,7 +27,7 @@ p.add_tools(hover)
 
 #To pass the data to plot, pass the ColumnDataSource object in source parameter.
 #If you have passed source parameter then just pass name of columns in left and right.
-q=p.quad(left="Start", right="End", bottom=0, top=1, color="red", source=cds)
+q=p.quad(left="Start_string", right="End_string", bottom=0, top=1, color="red", source=cds)
 
 output_file("TimePlot2.html")
 show(p)
