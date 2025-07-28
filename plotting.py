@@ -3,7 +3,7 @@ from motiondetect import df
 from bokeh.plotting import figure, output_file, show
 from bokeh.models import HoverTool, ColumnarDataSource
 
-cds=ColumnarDataSource(df) #Creating a ColumnDataSource object to pass data to plot.
+cds=ColumnarDataSource(data=df) #Creating a ColumnDataSource object to pass data to plot.
 
 #When loop in line 68 in motiondetect ends df is created and then plotting.py starts.
 #No need to execute motiondetect.py now just execute this file.
